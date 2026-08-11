@@ -91,6 +91,37 @@ document.querySelectorAll("[data-names]").forEach(el => {
   el.textContent = `${WEDDING.groom.name} & ${WEDDING.bride.name}`;
 });
 
+/* 메인 타이틀: Happily / Ever / After를 세 줄로, 한 글자씩 등장 */
+function animateWord(element, text, startIndex, step = 115) {
+  if (!element) return startIndex;
+  element.innerHTML = "";
+
+  [...text].forEach((char, index) => {
+    const span = document.createElement("span");
+    span.className = "char";
+    span.textContent = char;
+    span.style.setProperty("--delay", `${(startIndex + index) * step}ms`);
+    element.appendChild(span);
+  });
+
+  return startIndex + text.length;
+}
+
+const heroScript = document.getElementById("hero-script");
+const scriptLines = heroScript?.querySelectorAll(".script-line") || [];
+let titleIndex = 0;
+
+scriptLines.forEach(line => {
+  titleIndex = animateWord(line, line.dataset.word || "", titleIndex, 115);
+});
+
+setTimeout(() => heroScript?.classList.add("is-written"), 420);
+
+/* 이름은 타이틀이 충분히 등장한 뒤 왼쪽 → 오른쪽으로 */
+const heroNames = document.getElementById("hero-names");
+makeCharacterSpans(heroNames, `${WEDDING.groom.name} & ${WEDDING.bride.name}`, "name-char");
+setTimeout(() => heroNames?.classList.add("is-visible"), 420 + titleIndex * 115 + 350);
+
 document.querySelectorAll("[data-date]").forEach(el => {
   el.textContent = WEDDING.date.display;
 });
