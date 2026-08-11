@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>우리의 결혼식</title>
+    <!-- 감성적인 명조체 웹 폰트 적용 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Noto Serif KR', serif;
+            background-color: #000; /* 사진 로딩 전 배경색 */
+            color: #fff;
+            overflow-x: hidden;
+        }
+        /* 영상 느낌의 풀스크린 배경 사진 설정 */
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('main-photo.jpg'); /* 여기에 사진 파일명이 들어감 */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 15vh;
+            text-align: center;
+        }
+        /* 텍스트가 잘 보이도록 어두운 그라데이션 필터 적용 */
+        .hero-section::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+        .content-wrapper {
+            position: relative; z-index: 2;
+        }
+        .main-title {
+            font-size: 2.5rem; font-weight: 300; margin-bottom: 10px; letter-spacing: 2px;
+            color: #fdfaf6;
+        }
+        .sub-title {
+            font-size: 1rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 30px;
+            color: #e0dcd5;
+        }
+        .d-day-counter {
+            font-size: 1.2rem; border-top: 1px solid rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.5);
+            padding: 10px 20px; display: inline-block; letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="content-wrapper">
+            <div class="main-title">Happily Ever After</div>
+            <div class="sub-title">류성길 & 형가희</div>
+            <div class="d-day-counter" id="d-day-text">결혼식이 남았습니다.</div>
+        </div>
+    </div>
+
+    <script>
+        // D-Day 계산기
+        function calculateDday() {
+            const weddingDate = new Date('2026-10-31T12:00:00').getTime();
+            const today = new Date().getTime();
+            const distance = weddingDate - today;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            
+            if (days > 0) {
+                document.getElementById('d-day-text').innerText = `두 사람의 결혼식까지 ${days}일`;
+            } else if (days === 0) {
+                document.getElementById('d-day-text').innerText = `오늘, 결혼합니다`;
+            } else {
+                document.getElementById('d-day-text').innerText = `감사합니다`;
+            }
+        }
+        calculateDday();
+    </script>
+</body>
+</html>
