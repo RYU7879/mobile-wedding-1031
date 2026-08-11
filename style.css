@@ -829,3 +829,57 @@ textarea:focus {
     max-height: 90vh;
   }
 }
+
+
+/* ---------------- MUSIC BUTTON ---------------- */
+
+#bgm {
+  display: none;
+}
+
+.music-toggle {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: 16px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 11px;
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 999px;
+  background: rgba(30, 24, 20, .28);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: .12em;
+  cursor: pointer;
+}
+
+.music-icon {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.music-toggle.is-playing .music-icon {
+  animation: musicPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+  0%, 100% { transform: scale(1); opacity: .8; }
+  50% { transform: scale(1.18); opacity: 1; }
+}
+
+.music-label {
+  line-height: 1;
+}
+
+@media (min-width: 700px) {
+  .music-toggle {
+    right: calc(50% - 264px);
+  }
+}
