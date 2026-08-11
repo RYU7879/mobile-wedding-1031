@@ -74,7 +74,14 @@ const WEDDING = {
     아직 연결하지 않았다면 빈 문자열("") 그대로 두어도
     청첩장 화면과 입력창은 정상 작동합니다.
   */
-  RSVP_ENDPOINT: ""
+  RSVP_ENDPOINT: "",
+
+  // ★ 배경음악 파일
+  music: {
+    file: "music/wedding-bgm.mp3",
+    autoplay: true,
+    loop: true
+  }
 };
 
 
@@ -380,6 +387,77 @@ rsvpForm?.addEventListener("submit", async (event) => {
     rsvpSubmit.textContent = "전달하기";
   }
 });
+
+
+
+/* ---------------- 배경음악 ---------------- */
+
+const bgm = document.getElementById("bgm");
+const musicToggle = document.getElementById("music-toggle");
+
+let musicStarted = false;
+
+function setMusicButton(isPlaying) {
+  if (!musicToggle) return;
+  musicToggle.classList.toggle("is-playing", isPlaying);
+  musicToggle.setAttribute("aria-pressed", String(isPlaying));
+  musicToggle.setAttribute(
+    "aria-label",
+    isPlaying ? "배경음악 끄기" : "배경음악 켜기"
+  );
+}
+
+async function startMusic() {
+  if (!bgm || musicStarted) return;
+
+  try {
+    bgm.volume = 0.55;
+    await bgm.play();
+    musicStarted = true;
+    setMusicButton(true);
+  } catch (error) {
+    // 모바일 브라우저가 사용자 제스처 전 자동재생을 막은 경우입니다.
+    setMusicButton(false);
+  }
+}
+
+function stopMusic() {
+  if (!bgm) return;
+  bgm.pause();
+  setMusicButton(false);
+}
+
+musicToggle?.addEventListener("click", async (event) => {
+  event.stopPropagation();
+
+  if (bgm?.paused) {
+    musicStarted = false;
+    await startMusic();
+  } else {
+    stopMusic();
+    musicStarted = true;
+  }
+});
+
+// 페이지 진입 직후 자동재생을 시도합니다.
+// 브라우저가 막으면 첫 화면의 첫 터치/클릭에서 다시 시도합니다.
+if (WEDDING.music?.autoplay) {
+  startMusic();
+
+  const unlockMusic = () => {
+    if (bgm?.paused) {
+      musicStarted = false;
+      startMusic();
+    }
+    document.removeEventListener("pointerdown", unlockMusic);
+    document.removeEventListener("touchstart", unlockMusic);
+    document.removeEventListener("click", unlockMusic);
+  };
+
+  document.addEventListener("pointerdown", unlockMusic, { once: true, passive: true });
+  document.addEventListener("touchstart", unlockMusic, { once: true, passive: true });
+  document.addEventListener("click", unlockMusic, { once: true });
+}
 
 
 /* ---------------- ESC 닫기 ---------------- */
