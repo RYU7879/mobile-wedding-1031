@@ -8,18 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
+            margin: 0; padding: 0; width: 100%;
             font-family: 'Noto Serif KR', serif;
-            background-color: #000; /* 사진 로딩 전 배경색 */
-            color: #fff;
+            background-color: #fdfaf6; /* 전체 스크롤 시 보여질 배경색 */
+            color: #333;
             overflow-x: hidden;
         }
-        /* 영상 느낌의 풀스크린 배경 사진 설정 */
+        /* --- 첫 번째 장 (메인 화면) --- */
         .hero-section {
             position: relative;
             width: 100vw;
-            height: 100vh;
-            background-image: url('main-photo.jpg'); /* 여기에 사진 파일명이 들어감 */
+            height: 100vh; /* 화면 높이 100% 꽉 채움 */
+            background-image: url('main-photo.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -28,37 +28,90 @@
             justify-content: flex-end;
             padding-bottom: 15vh;
             text-align: center;
+            color: #fff;
         }
-        /* 텍스트가 잘 보이도록 어두운 그라데이션 필터 적용 */
         .hero-section::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
             z-index: 1;
         }
-        .content-wrapper {
-            position: relative; z-index: 2;
+        .content-wrapper { 
+            position: relative; z-index: 2; 
         }
-        .main-title {
-            font-size: 2.5rem; font-weight: 300; margin-bottom: 10px; letter-spacing: 2px;
-            color: #fdfaf6;
+        
+        /* 💡 추가된 부분 1: 텍스트가 자동으로 부드럽게 나타나는 애니메이션 */
+        .fade-in {
+            animation: fadeInEffect 2.5s ease-in-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .sub-title {
-            font-size: 1rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 30px;
-            color: #e0dcd5;
+        @keyframes fadeInEffect {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .d-day-counter {
-            font-size: 1.2rem; border-top: 1px solid rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.5);
-            padding: 10px 20px; display: inline-block; letter-spacing: 1px;
+
+        .main-title { font-size: 2.5rem; font-weight: 300; margin-bottom: 10px; letter-spacing: 2px; }
+        .sub-title { font-size: 1rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 30px; }
+        .d-day-counter { font-size: 1.2rem; border-top: 1px solid rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.5); padding: 10px 20px; display: inline-block; letter-spacing: 1px; }
+        
+        /* --- 💡 추가된 부분 2: 스크롤해서 내려갈 수 있는 두 번째 장 --- */
+        .invitation-section {
+            width: 100vw;
+            min-height: 100vh; /* 이 구역도 화면 하나를 꽉 채우도록 설정 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 2.2;
+        }
+        .invitation-title {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #a38a70;
+            font-weight: 600;
+        }
+        .invitation-text {
+            font-size: 1.05rem;
+            margin-bottom: 50px;
+        }
+        .wedding-info {
+            font-size: 1.1rem;
+            border: 1px solid #e0dcd5;
+            padding: 20px 40px;
         }
     </style>
 </head>
 <body>
 
+    <!-- 첫 번째 장 -->
     <div class="hero-section">
-        <div class="content-wrapper">
+        <!-- 텍스트 영역에 fade-in 클래스 적용 -->
+        <div class="content-wrapper fade-in">
             <div class="main-title">Happily Ever After</div>
             <div class="sub-title">류성길 & 형가희</div>
             <div class="d-day-counter" id="d-day-text">결혼식이 남았습니다.</div>
+        </div>
+    </div>
+
+    <!-- 두 번째 장 (아래로 스크롤하면 나오는 곳) -->
+    <div class="invitation-section">
+        <div class="invitation-title">초대합니다</div>
+        <div class="invitation-text">
+            서로가 마주보며 다져온 사랑을<br>
+            이제 함께 한 곳을 바라보며 걸어갈 수 있게<br>
+            큰 사랑으로 보살펴 주신 분들을 모십니다.<br><br>
+            저희 두 사람이 사랑의 이름으로<br>
+            지켜나갈 수 있게 앞날을<br>
+            축복해 주시면 감사하겠습니다.
+        </div>
+        <div class="wedding-info">
+            <strong>2026년 10월 31일 토요일</strong><br>
+            전주 (그레이스K)
         </div>
     </div>
 
