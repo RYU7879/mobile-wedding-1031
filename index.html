@@ -3,133 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>우리의 결혼식</title>
-    <!-- 감성적인 명조체 웹 폰트 적용 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>성길 & 가희의 결혼식</title>
+    <!-- 명조체 폰트와 영문 필기체 폰트 로드 -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0; padding: 0; width: 100%;
-            font-family: 'Noto Serif KR', serif;
-            background-color: #fdfaf6; /* 전체 스크롤 시 보여질 배경색 */
-            color: #333;
-            overflow-x: hidden;
-        }
-        /* --- 첫 번째 장 (메인 화면) --- */
-        .hero-section {
-            position: relative;
-            width: 100vw;
-            height: 100vh; /* 화면 높이 100% 꽉 채움 */
-            background-image: url('main-photo.jpg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 15vh;
-            text-align: center;
-            color: #fff;
-        }
-        .hero-section::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
-            z-index: 1;
-        }
-        .content-wrapper { 
-            position: relative; z-index: 2; 
-        }
+        /* 기본 리셋 및 모바일 최적화 */
+        body, html { margin: 0; padding: 0; width: 100%; background-color: #fcfbf9; font-family: 'Noto Serif KR', serif; color: #333; overflow-x: hidden; }
+        .wrap { max-width: 500px; margin: 0 auto; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         
-        /* 💡 추가된 부분 1: 텍스트가 자동으로 부드럽게 나타나는 애니메이션 */
-        .fade-in {
-            animation: fadeInEffect 2.5s ease-in-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        @keyframes fadeInEffect {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* 공통 스크롤 애니메이션 클래스 */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .main-title { font-size: 2.5rem; font-weight: 300; margin-bottom: 10px; letter-spacing: 2px; }
-        .sub-title { font-size: 1rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 30px; }
-        .d-day-counter { font-size: 1.2rem; border-top: 1px solid rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.5); padding: 10px 20px; display: inline-block; letter-spacing: 1px; }
+        /* [STEP 1] 메인 히어로 섹션 */
+        .hero { position: relative; width: 100%; height: 100vh; background-image: url('main-photo.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 10vh 0; box-sizing: border-box; }
+        .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; text-align: center; color: #fff; width: 100%; }
         
-        /* --- 💡 추가된 부분 2: 스크롤해서 내려갈 수 있는 두 번째 장 --- */
-        .invitation-section {
-            width: 100vw;
-            min-height: 100vh; /* 이 구역도 화면 하나를 꽉 채우도록 설정 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 50px 20px;
-            box-sizing: border-box;
-            text-align: center;
-            line-height: 2.2;
-        }
-        .invitation-title {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            color: #a38a70;
-            font-weight: 600;
-        }
-        .invitation-text {
-            font-size: 1.05rem;
-            margin-bottom: 50px;
-        }
-        .wedding-info {
-            font-size: 1.1rem;
-            border: 1px solid #e0dcd5;
-            padding: 20px 40px;
-        }
+        .top-date { font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 20px; }
+        .main-cursive { font-family: 'Great Vibes', cursive; font-size: 4rem; font-weight: 400; line-height: 1; margin: 20px 0; color: #ffd1dc; /* 영상 느낌의 핑크빛 필기체 */ text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .names { font-size: 1.2rem; letter-spacing: 5px; margin-top: auto; padding-bottom: 30px; }
+        .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 2; color: #fff; font-size: 0.8rem; letter-spacing: 2px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); } 40% { transform: translateY(-10px) translateX(-50%); } 60% { transform: translateY(-5px) translateX(-50%); } }
+
+        /* [STEP 2] 초대말씀 섹션 */
+        .section { padding: 80px 20px; text-align: center; border-bottom: 1px solid #f0eee9; }
+        .section-title { font-size: 1.1rem; color: #a38a70; letter-spacing: 4px; margin-bottom: 40px; font-weight: 600; }
+        .intro-text { font-size: 1rem; line-height: 2.2; margin-bottom: 40px; color: #555; }
+        .parents-info { font-size: 1.05rem; line-height: 1.8; }
+        .parents-info span { font-size: 0.85rem; color: #888; margin-right: 5px; }
+
+        /* [STEP 3] 예식일 및 카운트다운 */
+        .calendar-wrap { margin: 40px 0; }
+        .wedding-date { font-size: 1.3rem; letter-spacing: 2px; margin-bottom: 20px; font-weight: 600; }
+        .d-day-box { background: #fdfaf6; border: 1px solid #e0dcd5; padding: 20px; border-radius: 10px; font-size: 1.2rem; color: #a38a70; }
+
+        /* [STEP 4] 갤러리 및 오시는길 뼈대 */
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .gallery-item { background-color: #eee; height: 200px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #999; }
+        
+        .map-box { background: #eee; height: 250px; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #999; }
+        
+        /* [STEP 5] 마음 전하실 곳 (계좌번호) */
+        .account-btn { background: #fff; border: 1px solid #ddd; padding: 15px; width: 100%; box-sizing: border-box; border-radius: 5px; font-family: inherit; font-size: 1rem; cursor: pointer; margin-bottom: 10px; }
     </style>
 </head>
 <body>
+    <div class="wrap">
+        <!-- 1. 메인 화면 -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="top-date">2026. 10. 31 SAT</div>
+                <div class="main-cursive">Happily<br>Ever After</div>
+            </div>
+            <div class="hero-content names">
+                류성길 &middot; 형가희
+            </div>
+            <div class="scroll-indicator">SCROLL</div>
+        </section>
 
-    <!-- 첫 번째 장 -->
-    <div class="hero-section">
-        <!-- 텍스트 영역에 fade-in 클래스 적용 -->
-        <div class="content-wrapper fade-in">
-            <div class="main-title">Happily Ever After</div>
-            <div class="sub-title">류성길 & 형가희</div>
-            <div class="d-day-counter" id="d-day-text">결혼식이 남았습니다.</div>
-        </div>
+        <!-- 2. 초대합니다 -->
+        <section class="section reveal">
+            <div class="section-title">INVITATION</div>
+            <div class="intro-text">
+                그냥 좋은 것이<br>
+                가장 좋은 것입니다.<br><br>
+                그 때문에 그가 좋은 것이 아니라<br>
+                그가 좋아 그 부분이 좋은 것입니다.<br><br>
+                저희 두 사람, 서로의 가장 좋은 날에<br>
+                아름다운 인연을 맺고자 합니다.<br>
+                귀한 걸음 하시어 축복해 주시면<br>
+                큰 기쁨으로 간직하겠습니다.
+            </div>
+            <div class="parents-info">
+                <span>아버지 성함 &middot; 어머니 성함</span> 의 아들 <strong>성길</strong><br>
+                <span>아버지 성함 &middot; 어머니 성함</span> 의  딸  <strong>가희</strong>
+            </div>
+        </section>
+
+        <!-- 3. 날짜 및 D-Day -->
+        <section class="section reveal">
+            <div class="section-title">SAVE THE DATE</div>
+            <div class="calendar-wrap">
+                <div class="wedding-date">2026년 10월 31일 토요일 오후 12시 30분</div>
+                <p style="color: #666;">전주 예식장 이름 및 홀 기재</p>
+            </div>
+            <div class="d-day-box" id="d-day-text">
+                결혼식 카운트다운 로딩중...
+            </div>
+        </section>
+
+        <!-- 4. 갤러리 -->
+        <section class="section reveal">
+            <div class="section-title">GALLERY</div>
+            <p style="font-size: 0.9rem; color: #777;">아래 영역에 웨딩 사진을 추가할 수 있습니다.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">사진 1</div>
+                <div class="gallery-item">사진 2</div>
+                <div class="gallery-item">사진 3</div>
+                <div class="gallery-item">사진 4</div>
+            </div>
+        </section>
+
+        <!-- 5. 오시는 길 -->
+        <section class="section reveal">
+            <div class="section-title">LOCATION</div>
+            <div class="map-box">여기에 카카오맵/네이버지도 연동</div>
+            <div style="text-align: left; font-size: 0.95rem; line-height: 1.8; color: #555;">
+                <strong>주소:</strong> 전북특별자치도 전주시 00구 00로 00<br>
+                <strong>전화:</strong> 063-000-0000<br>
+                <br>
+                <strong>🚗 주차 안내</strong><br>
+                예식장 내 주차장 2시간 무료 이용
+            </div>
+        </section>
+
+        <!-- 6. 마음 전하실 곳 -->
+        <section class="section reveal">
+            <div class="section-title">마음 전하실 곳</div>
+            <button class="account-btn">신랑측 계좌번호 보기</button>
+            <button class="account-btn">신부측 계좌번호 보기</button>
+        </section>
     </div>
 
-    <!-- 두 번째 장 (아래로 스크롤하면 나오는 곳) -->
-    <div class="invitation-section">
-        <div class="invitation-title">초대합니다</div>
-        <div class="invitation-text">
-            서로가 마주보며 다져온 사랑을<br>
-            이제 함께 한 곳을 바라보며 걸어갈 수 있게<br>
-            큰 사랑으로 보살펴 주신 분들을 모십니다.<br><br>
-            저희 두 사람이 사랑의 이름으로<br>
-            지켜나갈 수 있게 앞날을<br>
-            축복해 주시면 감사하겠습니다.
-        </div>
-        <div class="wedding-info">
-            <strong>2026년 10월 31일 토요일</strong><br>
-            전주 (그레이스K)
-        </div>
-    </div>
-
+    <!-- 기능 제어 스크립트 (애니메이션 & 디데이) -->
     <script>
-        // D-Day 계산기
+        // 1. 스크롤 스르륵 나타나는 애니메이션 (Intersection Observer)
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+        reveals.forEach(reveal => observer.observe(reveal));
+
+        // 2. D-Day 계산기 (10월 31일 예식 기준)
         function calculateDday() {
-            const weddingDate = new Date('2026-10-31T12:00:00').getTime();
+            const weddingDate = new Date('2026-10-31T12:30:00').getTime();
             const today = new Date().getTime();
             const distance = weddingDate - today;
-            
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             
+            const ddayElement = document.getElementById('d-day-text');
             if (days > 0) {
-                document.getElementById('d-day-text').innerText = `두 사람의 결혼식까지 ${days}일`;
+                ddayElement.innerHTML = `성길 <span>♥</span> 가희의 결혼식이<br><strong>${days}일</strong> 남았습니다.`;
             } else if (days === 0) {
-                document.getElementById('d-day-text').innerText = `오늘, 결혼합니다`;
+                ddayElement.innerHTML = `오늘, 두 사람 결혼합니다.`;
             } else {
-                document.getElementById('d-day-text').innerText = `감사합니다`;
+                ddayElement.innerHTML = `함께 축하해 주셔서 감사합니다.`;
             }
         }
         calculateDday();
