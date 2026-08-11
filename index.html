@@ -9,7 +9,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ballet&family=Noto+Serif+KR:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Noto+Serif+KR:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <!--
+    Bethany Script는 별도 폰트 파일이 필요한 유료/개인용 폰트입니다.
+    사용 권한이 있는 BethanyScript.woff2 파일을 fonts/ 폴더에 넣으면
+    아래 @font-face가 정확한 폰트를 적용합니다.
+  -->
   <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -20,10 +25,14 @@
       <div class="hero-photo" aria-hidden="true"></div>
       <div class="hero-overlay" aria-hidden="true"></div>
 
-      <div class="hero-copy reveal">
+      <div class="hero-copy">
         <p class="hero-kicker">OUR WEDDING DAY</p>
-        <p class="hero-script">Happily<br>Ever After</p>
-        <p class="hero-names" data-names></p>
+        <div class="hero-script" id="hero-script" aria-label="Happily Ever After">
+          <span class="script-line" data-word="Happily"></span>
+          <span class="script-line" data-word="Ever"></span>
+          <span class="script-line" data-word="After"></span>
+        </div>
+        <p class="hero-names" id="hero-names"></p>
         <p class="hero-date" data-date></p>
       </div>
 
@@ -70,9 +79,12 @@
       <div class="inner reveal">
         <p class="eyebrow">SAVE THE DATE</p>
         <p class="save-year" data-year></p>
-        <p class="save-month">10</p>
-        <div class="save-rule"></div>
-        <p class="save-day">31 <span>SATURDAY</span></p>
+        <div class="calendar-date" aria-label="2026년 10월 31일">
+          <span class="calendar-number">10</span>
+          <span class="calendar-divider">/</span>
+          <span class="calendar-number">31</span>
+        </div>
+        <p class="calendar-weekday">SATURDAY</p>
         <p class="save-time" data-time></p>
 
         <div class="countdown" aria-live="polite">
